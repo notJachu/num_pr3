@@ -1,11 +1,22 @@
 import numpy as np
 
-def lagrange_interpolation(x, y, N = 10):
+def lagrange_interpolation(x, y, N = 10, cheb = False):
 
     # select N interpolation points
+    index = []
+    if cheb:
+        for i in range(N):
+            cheb_num = np.cos(((i - 1)/N - 1) * np.pi)
+            # scale from [-1, 1] to [0, 100]
+            cheb_num = (cheb_num*50) + 50
 
-    index = np.linspace(0, len(x) - 1, N).astype(int)
-    # print(index)
+            # round to nearest integer for index
+            cheb_num = int(round(cheb_num))
+
+            index.append(cheb_num)
+    else:
+        index = np.linspace(0, len(x) - 1, N).astype(int)
+    print(index)
     x_points = x[index]
     y_points = y[index]
 
