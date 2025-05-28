@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from lagrange import lagrange_interpolation
+from spline import spline_interpolation
 import matplotlib.pyplot as plt
 
 def main():
@@ -42,6 +43,24 @@ def main():
     plt.legend()
     plt.grid()
     plt.show()
+
+    # Interpolate with spline
+    interp = spline_interpolation(x, y, N)
+    interpolation_points = np.linspace(0, len(x) - 1, N).astype(int)
+    plt.plot(x, y, 'r-', label='Original Data')
+    plt.plot(x, interp, 'b-', label='Interpolated Data')
+    plt.scatter(x[interpolation_points], y[interpolation_points], color='green', label='Interpolation Points')
+
+    # runge efect
+    plt.xlim(0, 1)
+    plt.ylim(np.min(y) - 1, np.max(y) + 1)
+    plt.xlabel('X-axis')
+    plt.ylabel('Y-axis')
+    plt.title('Spline Interpolation')
+    plt.legend()
+    plt.grid()
+    plt.show()
+
 
 
 

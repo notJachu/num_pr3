@@ -5,7 +5,7 @@ def lagrange_interpolation(x, y, N = 10):
     # select N interpolation points
 
     index = np.linspace(0, len(x) - 1, N).astype(int)
-    print(index)
+    # print(index)
     x_points = x[index]
     y_points = y[index]
 
