@@ -7,7 +7,8 @@ import matplotlib.pyplot as plt
 def plot_interpolation(x, y, interp, interpolation_points, title):
     plt.plot(x, y, 'r-', label='Original Data')
     plt.plot(x, interp, 'b-', label='Interpolated Data')
-    plt.scatter(x[interpolation_points], y[interpolation_points], color='green', label='Interpolation Points')
+    y_in = np.interp(interpolation_points, x, y)
+    plt.scatter(interpolation_points, y_in, color='green', label='Interpolation Points')
 
     # runge effect
     plt.xlim(0, 1)
@@ -48,40 +49,40 @@ def main():
     N = [10, 20, 50, 70]
 
     # Chebyshev nodes 2nd kind
-    chebyshev_nodes = []
-    for i in range(30):
-        cheb_num = np.cos(((i - 1)/29) * np.pi)
-        # scale from [-1, 1] to [0, 100]
-        cheb_num = (cheb_num*50) + 50
 
-        # round to nearest integer for index
-        cheb_num = int(round(cheb_num))
+    # print(chebyshev_nodes)
+    #cheb
+    for n in N:
+        interp = lagrange_interpolation(x, y, n, cheb=True)
+        # interpolation_points = chebyshev_nodes
 
-        chebyshev_nodes.append(cheb_num)
+        k = np.arange(1, n+1)
+        interpolation_points = (np.cos((2*k - 1) * np.pi / (2*n)) + 1) / 2.0
+        plot_interpolation(x, y, interp, interpolation_points, 'Lagrange Interpolation Chebyshev')
 
-    print(chebyshev_nodes)
     # Lagrange data
     for n in N:
         interp = lagrange_interpolation(x, y, n)
-        interpolation_points = np.linspace(0, len(x) - 1, n).astype(int)
+        # interpolation_points = np.linspace(0, len(x) - 1, n).astype(int)
+        interpolation_points = np.linspace(0, 1, n)
         plot_interpolation(x, y, interp, interpolation_points, 'Lagrange Interpolation')
 
     # Lagrange challanger
     for n in N:
         interp = lagrange_interpolation(xch, ych, n)
-        interpolation_points = np.linspace(0, len(xch) - 1, n).astype(int)
+        interpolation_points = np.linspace(0, 1, n)
         plot_interpolation(xch, ych, interp, interpolation_points, 'Lagrange Interpolation Challenger')
 
     # Spline data
     for n in N:
         interp = spline_interpolation(x, y, n)
-        interpolation_points = np.linspace(0, len(x) - 1, n).astype(int)
+        interpolation_points = np.linspace(0, 1, n)
         plot_interpolation(x, y, interp, interpolation_points, 'Spline Interpolation')
 
     # Spline challanger
     for n in N:
         interp = spline_interpolation(xch, ych, n)
-        interpolation_points = np.linspace(0, len(xch) - 1, n).astype(int)
+        interpolation_points = np.linspace(0, 1, n)
         plot_interpolation(xch, ych, interp, interpolation_points, 'Spline Interpolation Challenger')
 
 

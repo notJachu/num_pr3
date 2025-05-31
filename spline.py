@@ -3,10 +3,13 @@ import numpy as np
 
 def spline_interpolation(x, y, N = 3):
 
-    index = np.linspace(0, len(x) - 1, N).astype(int)
+    # index = np.linspace(0, len(x) - 1, N).astype(int)
+    index = np.linspace(0, 1, N)
     # print(index)
-    x_points = x[index]
-    y_points = y[index]
+    # x_points = x[index]
+    # y_points = y[index]
+    x_points = index
+    y_points = np.interp(x_points, x, y)
     h = x_points[1] - x_points[0]
     # x_points = [1, 3, 5]
     # h = 2
